@@ -1,0 +1,257 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary);background:transparent;overflow-x:hidden}
+.wrap{padding:0 16px 2rem;max-width:100%;overflow:hidden}
+.header{background:#111827;border-radius:12px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.header-left{display:flex;flex-direction:column;gap:2px}
+.header-name{font-size:15px;font-weight:600;color:#fff;letter-spacing:.06em}
+.header-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.header-badge{background:rgba(255,255,255,.08);border:0.5px solid rgba(255,255,255,.15);border-radius:20px;padding:5px 12px;font-size:11px;color:rgba(255,255,255,.6);font-weight:500;white-space:nowrap;flex-shrink:0}
+.persona-bar{background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.persona-label{font-size:12px;color:var(--color-text-secondary);white-space:nowrap}
+.persona-input{flex:1;min-width:0;border:none;background:transparent;font-size:13px;font-weight:500;color:var(--color-text-primary);outline:none}
+.persona-hint{font-size:11px;color:var(--color-text-tertiary);white-space:nowrap}
+.replace-bar{background:var(--color-background-secondary);border-left:3px solid #374151;border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:1.5rem;font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.replace-bar strong{color:var(--color-text-primary);font-weight:500}
+.sec-label{font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--color-text-tertiary);text-transform:uppercase;margin-bottom:1rem}
+.flow{display:flex;flex-direction:column}
+.flow-step{display:flex;align-items:flex-start;gap:16px;padding:14px 0}
+.step-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary)}
+.step-body{flex:1;padding-top:4px}
+.step-title{font-size:14px;font-weight:500}
+.step-sub{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.connector{width:0.5px;height:20px;background:var(--color-border-secondary);margin-left:17px}
+.branch{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.branch-card{border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px;background:var(--color-background-secondary)}
+.branch-card.good{border-color:#3B6D11}
+.branch-card.bad{border-color:#993C1D}
+.branch-tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;margin-bottom:8px}
+.tag-good{background:#EAF3DE;color:#3B6D11}
+.tag-bad{background:#FAECE7;color:#993C1D}
+.branch-title{font-size:13px;font-weight:500;margin-bottom:4px}
+.branch-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:1.5rem 0}
+.phone-wrap{background:var(--color-background-secondary);border-radius:12px;padding:20px;max-width:320px;margin:0 auto}
+.phone-label{font-size:11px;color:var(--color-text-tertiary);text-align:center;margin-bottom:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.sms-sender{font-size:11px;color:#8e8e93;margin-bottom:6px;font-weight:500}
+.sms-bubble{background:#e5e5ea;border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:13px;line-height:1.5;color:#1c1c1e;margin-bottom:12px}
+.star-hint{font-size:11px;color:var(--color-text-tertiary);text-align:center;margin-bottom:4px}
+.stars-row{display:flex;gap:8px;justify-content:center;margin:14px 0 8px}
+.star-btn{width:44px;height:44px;border-radius:50%;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;transition:background .15s,transform .1s}
+.star-btn:hover{background:var(--color-background-secondary);transform:scale(1.08)}
+.star-btn.selected{background:#FAEEDA;border-color:#BA7517}
+.result-panel{border-radius:8px;padding:14px;font-size:13px;line-height:1.5;margin-top:12px;display:none}
+.result-panel.show{display:block}
+.result-good{background:#EAF3DE;color:#3B6D11;border:0.5px solid #639922}
+.result-bad{background:#FAECE7;color:#993C1D;border:0.5px solid #993C1D}
+.result-title{font-weight:500;margin-bottom:4px;font-size:13px}
+.result-body{font-size:12px;opacity:.85;line-height:1.55}
+.cta-btn{display:block;width:100%;margin-top:10px;padding:10px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;text-align:center;border:none}
+.cta-google{background:#1a73e8;color:#fff}
+.cta-private{background:#993C1D;color:#fff}
+.demo-reset{display:block;text-align:center;margin-top:8px;font-size:11px;color:var(--color-text-tertiary);cursor:pointer;background:none;border:none;text-decoration:underline;width:100%}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.metric-card{background:var(--color-background-secondary);border-radius:8px;padding:14px}
+.metric-val{font-size:24px;font-weight:500}
+.metric-lbl{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.metric-delta{font-size:11px;margin-top:4px;color:#3B6D11}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media(max-width:480px){.chart-grid{grid-template-columns:1fr}}
+.dist-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.dist-star{font-size:12px;color:var(--color-text-secondary);width:14px;text-align:right}
+.dist-bar-bg{flex:1;height:8px;background:var(--color-border-tertiary);border-radius:4px;overflow:hidden}
+.dist-bar-fill{height:100%;border-radius:4px}
+.dist-pct{font-size:12px;color:var(--color-text-secondary);width:28px;text-align:right}
+</style>
+
+<div class="wrap">
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-name">NORTHRANK MEDIA</div>
+    <div class="header-sub">Reputation & growth automation</div>
+  </div>
+  <div class="header-badge">Demo</div>
+</div>
+
+<div class="persona-bar">
+  <span class="persona-label">Demo for:</span>
+  <input class="persona-input" id="spaName" value="Glow Med Spa" oninput="updatePersona()" placeholder="Enter spa name...">
+  <span class="persona-hint">updates previews</span>
+</div>
+
+
+
+<div class="sec-label">How it works</div>
+<div class="flow">
+  <div class="flow-step">
+    <div class="step-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="2"/><path d="M5 7h6M5 10h4"/></svg>
+    </div>
+    <div class="step-body">
+      <div class="step-title">Appointment marked complete</div>
+      <div class="step-sub">CRM pipeline moves to "Completed" — workflow triggers automatically</div>
+    </div>
+  </div>
+  <div class="connector"></div>
+  <div class="flow-step">
+    <div class="step-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4z"/><path d="M2 4l6 5 6-5"/></svg>
+    </div>
+    <div class="step-body">
+      <div class="step-title">SMS sent 2 days later</div>
+      <div class="step-sub">Personalized message with the client's first name and service type</div>
+    </div>
+  </div>
+  <div class="connector"></div>
+  <div class="flow-step">
+    <div class="step-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.6 4.8H15l-4 2.9 1.5 4.8L8 11.6l-4.5 2.9 1.5-4.8-4-2.9h5.4z"/></svg>
+    </div>
+    <div class="step-body">
+      <div class="step-title">Client taps a star rating</div>
+      <div class="step-sub">One-tap experience — no app, no login required</div>
+    </div>
+  </div>
+  <div class="connector"></div>
+  <div class="flow-step">
+    <div class="step-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v7M5 6l3 3 3-3"/><path d="M3 11v2h10v-2"/></svg>
+    </div>
+    <div class="step-body">
+      <div class="step-title">Intelligent routing</div>
+      <div class="step-sub">Rating determines the next step — see the branches below</div>
+      <div class="branch">
+        <div class="branch-card good">
+          <span class="branch-tag tag-good">4–5 stars</span>
+          <div class="branch-title">Google review link</div>
+          <div class="branch-desc">Pre-filled prompt makes it effortless. Review goes public and boosts ranking.</div>
+        </div>
+        <div class="branch-card bad">
+          <span class="branch-tag tag-bad">1–3 stars</span>
+          <div class="branch-title">Private feedback form</div>
+          <div class="branch-desc">Owner gets an instant alert. Negative review never reaches Google.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="sec-label">Live demo — tap a rating</div>
+<div class="phone-wrap">
+  <div class="phone-label" id="phoneLabel">Glow Med Spa · SMS</div>
+  <div class="sms-sender" id="smsSender">Glow Med Spa</div>
+  <div class="sms-bubble" id="smsBubble">Hi Sarah! Thank you for your recent visit at Glow Med Spa. We'd love to hear how it went — how would you rate your experience?</div>
+  <div class="star-hint" id="starHint">Tap to rate</div>
+  <div class="stars-row">
+    <button class="star-btn" onclick="rate(1)">★</button>
+    <button class="star-btn" onclick="rate(2)">★</button>
+    <button class="star-btn" onclick="rate(3)">★</button>
+    <button class="star-btn" onclick="rate(4)">★</button>
+    <button class="star-btn" onclick="rate(5)">★</button>
+  </div>
+  <div id="resultGood" class="result-panel result-good">
+    <div class="result-title">You're being sent to Google</div>
+    <div class="result-body">We pre-filled your review with your service. One tap to post — takes 10 seconds.</div>
+    <button class="cta-btn cta-google">Leave a Google Review →</button>
+  </div>
+  <div id="resultBad" class="result-panel result-bad">
+    <div class="result-title">We're sorry to hear that</div>
+    <div class="result-body">Your feedback goes directly to our owner. We'll reach out within 24 hours to make it right.</div>
+    <button class="cta-btn cta-private">Submit Private Feedback →</button>
+  </div>
+</div>
+<div style="text-align:center;margin-top:8px">
+  <button class="demo-reset" id="resetBtn" style="display:none" onclick="reset()">↺ Reset demo</button>
+</div>
+
+<div class="divider"></div>
+
+<div class="sec-label">Review dashboard — <span id="dashLabel">Glow Med Spa</span></div>
+<div class="metrics">
+  <div class="metric-card">
+    <div class="metric-val">4.9</div>
+    <div class="metric-lbl">Average rating</div>
+    <div class="metric-delta">↑ from 4.2 (90 days ago)</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val">127</div>
+    <div class="metric-lbl">Total reviews</div>
+    <div class="metric-delta">↑ 84 new this quarter</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-val">91%</div>
+    <div class="metric-lbl">4–5 star rate</div>
+    <div class="metric-delta">↑ from 74% prior period</div>
+  </div>
+</div>
+
+<div class="chart-grid">
+  <div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;font-weight:500">Review velocity (weekly)</div>
+    <div style="position:relative;width:100%;height:200px">
+      <canvas id="velocityChart"></canvas>
+    </div>
+  </div>
+  <div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;font-weight:500">Star distribution</div>
+    <div style="padding-top:8px">
+      <div class="dist-row"><span class="dist-star">5</span><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:68%;background:#639922"></div></div><span class="dist-pct">68%</span></div>
+      <div class="dist-row"><span class="dist-star">4</span><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:23%;background:#97C459"></div></div><span class="dist-pct">23%</span></div>
+      <div class="dist-row"><span class="dist-star">3</span><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:5%;background:#EF9F27"></div></div><span class="dist-pct">5%</span></div>
+      <div class="dist-row"><span class="dist-star">2</span><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:2%;background:#D85A30"></div></div><span class="dist-pct">2%</span></div>
+      <div class="dist-row"><span class="dist-star">1</span><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:2%;background:#E24B4A"></div></div><span class="dist-pct">2%</span></div>
+    </div>
+    <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:14px;line-height:1.5">1–3 star responses go to the owner privately — none appear on Google.</div>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function updatePersona(){
+  var n=document.getElementById('spaName').value.trim()||'Glow Med Spa';
+  document.getElementById('phoneLabel').textContent=n+' · SMS';
+  document.getElementById('smsSender').textContent=n;
+  document.getElementById('smsBubble').textContent='Hi Sarah! Thank you for your recent visit at '+n+'. We\'d love to hear how it went — how would you rate your experience?';
+  document.getElementById('dashLabel').textContent=n;
+}
+
+function rate(n){
+  document.querySelectorAll('.star-btn').forEach(function(b,i){b.classList.toggle('selected',i<n);});
+  document.getElementById('resultGood').classList.toggle('show',n>=4);
+  document.getElementById('resultBad').classList.toggle('show',n<4);
+  document.getElementById('resetBtn').style.display='inline';
+  document.getElementById('starHint').textContent=n+' star'+(n>1?'s':'')+' selected';
+}
+
+function reset(){
+  document.querySelectorAll('.star-btn').forEach(function(b){b.classList.remove('selected');});
+  document.getElementById('resultGood').classList.remove('show');
+  document.getElementById('resultBad').classList.remove('show');
+  document.getElementById('resetBtn').style.display='none';
+  document.getElementById('starHint').textContent='Tap to rate';
+}
+
+var isDark=matchMedia('(prefers-color-scheme:dark)').matches;
+var gridColor=isDark?'rgba(255,255,255,0.08)':'rgba(0,0,0,0.06)';
+var textColor=isDark?'#888':'#888780';
+new Chart(document.getElementById('velocityChart'),{
+  type:'bar',
+  data:{
+    labels:['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'],
+    datasets:[{label:'Reviews',data:[2,3,4,4,6,7,8,9,11,13,16,18],backgroundColor:'#374151',borderRadius:4,borderSkipped:false}]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11},autoSkip:false,maxRotation:0}},
+      y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:11},stepSize:5},beginAtZero:true}
+    }
+  }
+});
+</script>
